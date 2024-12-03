@@ -12,7 +12,7 @@ For Regular Users, the platform will provide an interface to search for flights 
 
 Once a booking is complete, the system generates an e-ticket containing all relevant details. This e-ticket includes a QR code for quick access and validation, enhancing the user experience and streamlining check-ins and other related processes.
 
-### Requirements
+### [Requirements](REQUIREMENTS.md)
 
 ### **1. User Authentication and Authorization**
 
