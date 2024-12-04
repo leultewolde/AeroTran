@@ -4,7 +4,7 @@
 1. [Abraham Mathewos Meja](https://github.com/abraham-tech)
 2. [Leul W. Tewolde](https://github.com/leultewolde)
 3. [Msgun Abrham Berhe](https://github.com/Msgun95)
-4. [Raimundo Pereira](https://github.com/Msgun95)
+4. [Raimundo Pereira](https://github.com/raipereira)
 
 # Project Description
 
