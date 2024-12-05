@@ -1,6 +1,6 @@
 # Architecture and Design
 
-![class diagram](class-diagram.png)
+![class diagram](class-diagram-with-valued-objects.png)
 
 **Value Objects and Entities:**
 
