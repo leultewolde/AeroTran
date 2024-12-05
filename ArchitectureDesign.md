@@ -16,3 +16,6 @@
     - Payment: Represents a payment with mutable properties (credit card ID and user name).
 
 ![classdiagram](class-diagram-with-dao.png)
+
+## Sequence Diagram
+![Sequence Diagram](Sequence-Diagram.png)
