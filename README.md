@@ -2,7 +2,7 @@
 
 **Team Members**
 1. [Abraham Mathewos Meja](https://github.com/abraham-tech)
-2. [Leul W. Tewolde](https://github.com/leultewolde)
+2. [Leul Woldegabriel Tewolde](https://github.com/leultewolde)
 3. [Msgun Abrham Berhe](https://github.com/Msgun95)
 4. [Raimundo Pereira](https://github.com/raipereira)
 
@@ -18,7 +18,7 @@ For Regular Users, the platform will provide an interface to search for flights 
 
 Once a booking is complete, the system generates an e-ticket containing all relevant details. This e-ticket includes a QR code for quick access and validation, enhancing the user experience and streamlining check-ins and other related processes.
 
-### Functional Reqirements
+### Functional Requirements
 
 ### **1. User Authentication and Authorization**
 
@@ -143,13 +143,13 @@ Once a booking is complete, the system generates an e-ticket containing all rele
 ## Requirements
 
 ### Project Context Diagram
-![Context Diagram](context-diagram.png)
+![Context Diagram](diagrams/context-diagram.png)
 
 ### Use Case Diagram
-![Use Case Diagram](use-case.png)
+![Use Case Diagram](diagrams/use-case.png)
 
 ### User Story Map
-![User Story Map](user-story-map.png)
+![User Story Map](diagrams/user-story-map.png)
 
 ### Acceptance Criteria and Scenarios
 1. **Booking Management: Process Flight Booking**
@@ -183,7 +183,7 @@ Once a booking is complete, the system generates an e-ticket containing all rele
 
 ---
 
-2. **Manage Flights: Create New Flight Schedules**
+1. **Manage Flights: Create New Flight Schedules**
 
 **Acceptance Criteria:**
 
@@ -209,7 +209,7 @@ Once a booking is complete, the system generates an e-ticket containing all rele
 
 ---
 
-3. **Integration with Payment Gateways: Make Payment**
+1. **Integration with Payment Gateways: Make Payment**
 
 **Acceptance Criteria:**
 

@@ -2,17 +2,18 @@
 
 **Team Members**
 1. [Abraham Mathewos Meja](https://github.com/abraham-tech)
-2. [Leul W. Tewolde](https://github.com/leultewolde)
-3. [Msgun](https://github.com/Msgun95)
+2. [Leul Woldegabriel Tewolde](https://github.com/leultewolde)
+3. [Msgun Abrham Berhe](https://github.com/Msgun95)
+4. [Raimundo Pereira](https://github.com/raipereira)
 
 ## Project Context Diagram
-![Context Diagram](context-diagram.png)
+![Context Diagram](diagrams/context-diagram.png)
 
 ## Use Case Diagram
-![Use Case Diagram](use-case.png)
+![Use Case Diagram](diagrams/use-case.png)
 
 ## User Story Map
-![User Story Map](user-story-map.png)
+![User Story Map](diagrams/user-story-map.png)
 
 ## Acceptance Criteria and Scenarios
 ### 1. **Booking Management: Process Flight Booking**
