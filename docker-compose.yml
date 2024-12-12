@@ -13,3 +13,14 @@ services:
       start_period: 10s
       test: ["CMD-SHELL","curl -f http://localhost:8082/actuator/health || exit 1"]
       timeout: 10s
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: yarn dev
