@@ -1,8 +1,9 @@
 package edu.miu.cs425.backend.controller;
 
 
-import edu.miu.cs425.backend.Service.UserService;
+import edu.miu.cs425.backend.service.UserService;
 import edu.miu.cs425.backend.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-//    @GetMapping("something")
-//    public String getSomenthing(){
-//        return "Hello World";
-//    }
 
     // Create User
     @PostMapping

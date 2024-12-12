@@ -1,7 +1,8 @@
-package edu.miu.cs425.backend.Service;
+package edu.miu.cs425.backend.service;
 
 import edu.miu.cs425.backend.model.User;
 import edu.miu.cs425.backend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,11 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class DataInsertionService implements CommandLineRunner {
 
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
