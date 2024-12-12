@@ -209,7 +209,32 @@ Once a booking is complete, the system generates an e-ticket containing all rele
 
 ---
 
+
 1. **Integration with Payment Gateways: Make Payment**
+
+## Building the Docker Image
+
+Navigate to the project directory and run:
+
+```bash
+docker-compose build
+```
+
+### Running the Application
+Start the application in development mode with live reload:
+
+```bash
+docker-compose up
+```
+
+The application will be available at http://localhost:3000.
+
+### Stopping the Application
+To stop the application, press Ctrl+C in the terminal and run:
+
+```bash
+docker-compose down
+```
 
 **Acceptance Criteria:**
 
