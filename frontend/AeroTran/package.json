@@ -1,0 +1,46 @@
+{
+  "name": "AeroTran",
+  "description": "The Flight Booking System aims to simplify the flight reservation process, enabling users to book flights efficiently, manage their bookings, and access e-tickets conveniently.",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Abraham Meja <abrahammeja3@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "starter",
+    "typescript"
+  ],
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "postinstall": "husky install",
+    "commit": "cz"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "yarn lint --fix",
+      "yarn format"
+    ]
+  },
+  "dependencies": {
+    "@faker-js/faker": "6.3.1",
+    "@fortawesome/fontawesome-svg-core": "6.1.1",
+    "@fortawesome/free-brands-svg-icons": "6.1.1",
+    "@fortawesome/free-solid-svg-icons": "6.1.1",
+    "@fortawesome/react-fontawesome": "0.1.18",
+    "next": "12.1.5",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "devDependencies": {
+    "typescript": "4.5.4",
+    "eslint": "7.32.0",
+    "prettier": "2.5.1",
+    "husky": "7.0.2",
+    "commitizen": "4.2.3"
+  }
+}
