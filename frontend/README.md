@@ -8,6 +8,7 @@ The Flight Booking System aims to simplify the flight reservation process, enabl
 - [Getting Started](#getting-started)
 - [Scripts](#scripts)
 - [Project Structure](#project-structure)
+- [Building the Docker Image](#building-the-docker-image)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -29,6 +30,9 @@ The Flight Booking System aims to simplify the flight reservation process, enabl
 
 - Node.js (>= 12.0.0)
 - npm or yarn
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
 
 ## Scripts
 
@@ -105,6 +109,30 @@ aerotran/
 ├── next.config.js      # Next.js configuration
 ├── .gitignore          # Git ignore file
 └── package.json        # Project dependencies and scripts
+```
+
+## Building the Docker Image
+
+Navigate to the project directory and run:
+
+```bash
+docker-compose build
+```
+
+### Running the Application
+Start the application in development mode with live reload:
+
+```bash
+docker-compose up
+```
+
+The application will be available at http://localhost:3000.
+
+### Stopping the Application
+To stop the application, press Ctrl+C in the terminal and run:
+
+```bash
+docker-compose down
 ```
 
 
