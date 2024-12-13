@@ -21,11 +21,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Java 23
-      - name: Set up Java 23
+      # Step 2: Set up Java 21
+      - name: Set up Java 21
         uses: actions/setup-java@v3
         with:
-          java-version: 23
+          java-version: 21
           distribution: temurin # Use Temurin distribution of Java
 
       # Step 3: Cache Maven Dependencies
