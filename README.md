@@ -1,5 +1,7 @@
 # AeroTran
 
+[![Backend Maven Build and Test](https://github.com/leultewolde/AeroTran/actions/workflows/maven-tests.yml/badge.svg)](https://github.com/leultewolde/AeroTran/actions/workflows/maven-tests.yml)
+
 **Team Members**
 1. [Abraham Mathewos Meja](https://github.com/abraham-tech)
 2. [Leul Woldegabriel Tewolde](https://github.com/leultewolde)
