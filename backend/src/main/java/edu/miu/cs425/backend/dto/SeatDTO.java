@@ -1,0 +1,14 @@
+package edu.miu.cs425.backend.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SeatDTO {
+    private Long seatId;
+    private String seatNumber;
+    private boolean available;
+}
