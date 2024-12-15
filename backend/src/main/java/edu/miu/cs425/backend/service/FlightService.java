@@ -44,6 +44,24 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
+    public List<FlightResponseDTO> searchFlights(String departureCity, String destinationCity) {
+        List<Flight> flights = flightRepository.findByDepartureCityAndDestinationCity(departureCity, destinationCity);
+        return flights.stream()
+                .map(flight -> new FlightResponseDTO(
+                        flight.getFlightId(),
+                        flight.getFlightNumber(),
+                        flight.getDepartureCity(),
+                        flight.getDestinationCity(),
+                        flight.getDepartureTime(),
+                        flight.getArrivalTime(),
+                        flight.getStatus(),
+                        flight.getSeats().stream()
+                                .map(seat -> new SeatDTO(seat.getSeatId(), seat.getSeatNumber(), seat.isAvailable()))
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
+    }
+
     private FlightResponseDTO mapToFlightResponseDTO(Flight flight) {
         List<SeatDTO> seatDTOs = flight.getSeats().stream()
                 .map(seat -> new SeatDTO(seat.getSeatId(), seat.getSeatNumber(), seat.isAvailable()))

@@ -25,4 +25,13 @@ public class FlightController {
     public ResponseEntity<List<FlightResponseDTO>> getAllFlights() {
         return ResponseEntity.ok(flightService.getAllFlights());
     }
+
+    // Search flights by departure and destination city
+    @GetMapping("/search")
+    public ResponseEntity<List<FlightResponseDTO>> searchFlights(
+            @RequestParam String departureCity,
+            @RequestParam String destinationCity) {
+        List<FlightResponseDTO> flights = flightService.searchFlights(departureCity, destinationCity);
+        return ResponseEntity.ok(flights);
+    }
 }
