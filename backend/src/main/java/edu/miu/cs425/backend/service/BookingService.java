@@ -1,7 +1,9 @@
 package edu.miu.cs425.backend.service;
 
+import edu.miu.cs425.backend.dto.SeatDTO;
 import edu.miu.cs425.backend.dto.request.BookingRequestDTO;
 import edu.miu.cs425.backend.dto.response.BookingResponseDTO;
+import edu.miu.cs425.backend.dto.response.FlightResponseDTO;
 import edu.miu.cs425.backend.model.Flight;
 import edu.miu.cs425.backend.model.Seat;
 import edu.miu.cs425.backend.model.Ticket;
@@ -55,8 +57,24 @@ public class BookingService {
                 seats.stream().map(Seat::getSeatNumber).collect(Collectors.toList()), savedTicket.getQrCode());
     }
 
+    public List<BookingResponseDTO> getAllTickets() {
+        return ticketRepository.findAll().stream()
+                .map(this::mapToBookingResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+
     private byte[] generateQrCode(Ticket ticket) {
         // Placeholder for QR code generation logic
         return ("Ticket#" + ticket.getTicketId()).getBytes(StandardCharsets.UTF_8);
+    }
+
+    private BookingResponseDTO mapToBookingResponseDTO(Ticket ticket) {
+
+        return new BookingResponseDTO(
+                ticket.getTicketId(), ticket.getUser().getId(), ticket.getFlight().getFlightId(),
+                ticket.getSeatIds(), ticket.getQrCode()
+
+        );
     }
 }

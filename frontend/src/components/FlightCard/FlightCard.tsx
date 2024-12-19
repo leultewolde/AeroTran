@@ -1,25 +1,5 @@
 import React from "react";
-
-interface Seat {
-    seatId: number;
-    seatNumber: string;
-    available: boolean;
-}
-
-interface Flight {
-    flightId: number;
-    flightNumber: string;
-    departureCity: string;
-    destinationCity: string;
-    departureTime: string;
-    arrivalTime: string;
-    status: string;
-    seats: Seat[];
-}
-
-interface FlightCardProps {
-    flight: Flight;
-}
+import {Seat, Flight, FlightCardProps} from "@/types"
 
 const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
     return (

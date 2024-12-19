@@ -10,8 +10,10 @@ import {
   faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {useRouter} from "next/router";
 
 const SideBar = () => {
+  const router = useRouter();
   return (
     <>
       <div className="w-60 h-screen" />
@@ -38,10 +40,11 @@ const SideBar = () => {
                 <span className="text-md  ml-2">Tickets</span>
               </div>
             </li>
-            <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8">
+            <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8"
+            onClick={() => router.push("/flights")}>
               <div className="flex items-center">
                 <FontAwesomeIcon icon={faUsers} className="w-8 mr-4" />
-                <span className="text-md  ml-2">Clientes</span>
+                <span className="text-md  ml-2">Flights</span>
               </div>
             </li>
             <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8">
