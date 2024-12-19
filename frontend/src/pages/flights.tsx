@@ -13,19 +13,26 @@ function Flights() {
     const [flights, setFlights] = useState<Flight[]>([]);
 
     const router = useRouter();
-    const [departure, setDeparture] = useState<string | null>(null);
-    const [arrival, setArrival] = useState<string | null>(null);
+    const { departure, arrival } = router.query;
 
-    useEffect(() => {
-        if (router.query) {
-            if (router.query.departure) setDeparture(router.query.departure as string);
-            if (router.query.arrival) setArrival(router.query.arrival as string);
-        }
-    }, [router]);
+    // useEffect(() => {
+    //     if (router.query) {
+    //         if (router.query.departure) setDeparture(router.query.departure as string);
+    //         if (router.query.arrival) setArrival(router.query.arrival as string);
+    //     }
+    // }, [router]);
+
+    const handleChildClick = async (departure1 ="", arrival1="") => {
+        console.log('Button clicked in child component!');
+        // Add your logic here
+        // setDeparture(router.query.departure as string);
+        // setArrival(router.query.arrival as string);
+        await searchFlights(departure1 as string, arrival1 as string);
+    };
 
     useEffect(() => {
         console.log({ departure, arrival });
-        if (!arrival || !departure) {
+        if (!router.query.departure || !router.query.arrival) {
             console.log('departure not found');
             const fetchData = async () => {
                 await fetchAllFlights();
@@ -35,7 +42,7 @@ function Flights() {
         } else {
             console.log('searching')
             const searchData = async () => {
-                await searchFlights(departure, arrival);
+                await searchFlights(departure as string, arrival as string);
             };
 
             searchData();
@@ -90,7 +97,7 @@ function Flights() {
             <SideBar />
 
             <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
-                <Index departure={departure} arrival={arrival}/>
+                <Index departure={departure} arrival={arrival} onButtonClick={handleChildClick}  />
                 <div className="flex flex-wrap gap-4 p-4">
                     {flights.map((flightData: Flight) => (
                         <FlightCard key={flightData.id} flight={flightData}/>

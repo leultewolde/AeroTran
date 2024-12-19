@@ -25,12 +25,16 @@ function Index(props: any) {
             setError(true);
             return;
         }
+
         setError(false);
 
         router.push({
             pathname: '/flights',
             query: { departure, arrival },
-        });
+        }).then(
+            () =>  props.onButtonClick(departure, arrival)
+        );
+
     };
 
     return (
