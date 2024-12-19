@@ -18,9 +18,6 @@ const SideBar = () => {
       <div className="fixed top-0 shadow-2xl w-60 bg-white shadow md:h-screen flex-col justify-between flex">
         <div className="px-8">
           <div className="h-16 w-full flex items-center my-12">
-            <div className="m-auto">
-              <h1 className="text-5xl text-slate-600 font-semibold">LOGO</h1>
-            </div>
           </div>
           <ul className="mt-16">
             <li className="flex w-full justify-between font-semibold text-sky-500 hover:text-sky-400 cursor-pointer items-center mb-8">
