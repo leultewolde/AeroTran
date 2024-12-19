@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Autocomplete, Box, Button, TextField, Typography,Paper} from '@mui/material';
+import React, { useState } from 'react';
+import { Autocomplete, Box, Button, TextField, Typography, Paper } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 function Index(props: any) {
     const [departure, setDeparture] = useState<string | null>(props.departure);
@@ -31,9 +31,13 @@ function Index(props: any) {
         router.push({
             pathname: '/flights',
             query: { departure, arrival },
-        }).then(
-            () =>  props.onButtonClick(departure, arrival)
-        );
+        }).
+        then(
+            () => {
+                if (props.userid){
+                    props?.onButtonClick(departure, arrival)
+                }
+            });
 
     };
 
