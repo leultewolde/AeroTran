@@ -1,5 +1,6 @@
 package edu.miu.cs425.backend.util;
 
+import edu.miu.cs425.backend.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
