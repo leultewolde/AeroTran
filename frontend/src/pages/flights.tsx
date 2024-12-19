@@ -4,7 +4,7 @@ import lastOrdersData from '@/data/lastOrders';
 import SideBar from '@/components/SideBar';
 import FlightCard from "@/components/FlightCard/FlightCard";
 import {FlightAPI} from "@/lib/api/FlightAPI";
-import {Flight} from "../../AeroTran/src/types";
+import {Flight} from "@/types";
 import {useRouter} from "next/router";
 import Index from "@/pages/index";
 

@@ -1,26 +1,11 @@
 import axios from 'axios';
+import {Flight, Booking, Ticket} from "@/types";
+
 
 // Define the base URL for the API
 const API_BASE_URL = 'http://localhost:8080/api/flights';
 const BOOKINGS_BASE_URL = 'http://localhost:8080/api/bookings';
 
-// Define TypeScript interfaces for the flight data
-interface Flight {
-    id?: string; // Optional for create
-    flightNumber: string;
-    departureCity: string;
-    destinationCity: string;
-    departureTime: string; // ISO format
-    arrivalTime: string; // ISO format
-    status: string;
-    seatNumbers: string[];
-}
-
-interface Booking {
-    userId: number;
-    flightId: number;
-    seatNumbers: string[];
-}
 
 // Axios instance for API calls
 const api = axios.create({
@@ -41,7 +26,7 @@ const bookingsApi = axios.create({
 export const FlightAPI = {
     // Create a new flight
     createFlight: async (flight: Flight): Promise<Flight> => {
-        const response = await api.post('/', flight);
+        const response = await api.post('', flight);
         return response.data;
     },
 
@@ -80,10 +65,13 @@ export const FlightAPI = {
 export const BookingAPI = {
     // Create a new booking
     createBooking: async (booking: Booking): Promise<Booking> => {
-        const response = await bookingsApi.post('/', booking);
+        const response = await bookingsApi.post('', booking);
+        return response.data;
+    },
+
+    // Get all tickets
+    getAllTickets: async (): Promise<Ticket[]> => {
+        const response = await bookingsApi.get('');
         return response.data;
     },
 };
-
-// Example usage
-// Import FlightAPI and BookingAPI and call the required methods in your Next.js components or API routes
