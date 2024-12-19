@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/flights")
+@CrossOrigin(origins = "*") // Allow requests from any origin
 @RequiredArgsConstructor
 public class FlightController {
     private final FlightService flightService;
