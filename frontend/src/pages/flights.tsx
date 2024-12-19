@@ -2,33 +2,37 @@ import React, {useEffect, useState} from 'react';
 
 import lastOrdersData from '@/data/lastOrders';
 import SideBar from '@/components/SideBar';
-import Table from '@/components/Table';
-import SearchBar from '@/components/SearchBar';
-import PerfilBar from '@/components/PerfilBar';
-import StatusCards from '@/components/StatusCards';
 import FlightCard from "@/components/FlightCard/FlightCard";
 import {FlightAPI} from "@/lib/api/FlightAPI";
 import {Flight} from "../../AeroTran/src/types";
 import {useRouter} from "next/router";
+import Index from "@/pages/index";
 
 function Flights() {
     const [lastOrders] = useState([...lastOrdersData]);
     const [flights, setFlights] = useState<Flight[]>([]);
 
     const router = useRouter();
-    const [departure, setDeparture] = useState<string | null>(null);
-    const [arrival, setArrival] = useState<string | null>(null);
+    const { departure, arrival } = router.query;
 
-    useEffect(() => {
-        if (router.query) {
-            if (router.query.departure) setDeparture(router.query.departure as string);
-            if (router.query.arrival) setArrival(router.query.arrival as string);
-        }
-    }, [router]);
+    // useEffect(() => {
+    //     if (router.query) {
+    //         if (router.query.departure) setDeparture(router.query.departure as string);
+    //         if (router.query.arrival) setArrival(router.query.arrival as string);
+    //     }
+    // }, [router]);
+
+    const handleChildClick = async (departure1 ="", arrival1="") => {
+        console.log('Button clicked in child component!');
+        // Add your logic here
+        // setDeparture(router.query.departure as string);
+        // setArrival(router.query.arrival as string);
+        await searchFlights(departure1 as string, arrival1 as string);
+    };
 
     useEffect(() => {
         console.log({ departure, arrival });
-        if (!arrival || !departure) {
+        if (!router.query.departure || !router.query.arrival) {
             console.log('departure not found');
             const fetchData = async () => {
                 await fetchAllFlights();
@@ -38,7 +42,7 @@ function Flights() {
         } else {
             console.log('searching')
             const searchData = async () => {
-                await searchFlights(departure, arrival);
+                await searchFlights(departure as string, arrival as string);
             };
 
             searchData();
@@ -91,17 +95,9 @@ function Flights() {
     return (
         <div className="flex flex-no-wrap bg-slate-50">
             <SideBar />
+
             <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
-                <div className="w-full flex justify-between">
-                    <SearchBar/>
-                    <PerfilBar/>
-                </div>
-                {/*<StatusCards />*/}
-                {/*<div className="mb-8 w-full h-64 rounded border-dashed border-2 border-gray-300" />*/}
-                {/*<div className="font-semibold text-gray-700 shadow-md p-6 border-x bg-white border-t border-gray-100 rounded-t-xl text-xl">*/}
-                {/*  Últimos pedidos realizados*/}
-                {/*</div>*/}
-                {/*<Table data={lastOrders} rowsPerPage={4} />*/}
+                <Index departure={departure} arrival={arrival} onButtonClick={handleChildClick}  />
                 <div className="flex flex-wrap gap-4 p-4">
                     {flights.map((flightData: Flight) => (
                         <FlightCard key={flightData.id} flight={flightData}/>

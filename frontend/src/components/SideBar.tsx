@@ -29,13 +29,13 @@ const SideBar = () => {
             <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8">
               <div className="flex items-center">
                 <FontAwesomeIcon icon={faFileCirclePlus} className="w-8 mr-4" />
-                <span className="text-md  ml-2">Pedidos</span>
+                <span className="text-md  ml-2">Create Flight</span>
               </div>
             </li>
             <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8">
               <div className="flex items-center">
                 <FontAwesomeIcon icon={faGlasses} className="w-8 mr-4" />
-                <span className="text-md  ml-2">Produtos</span>
+                <span className="text-md  ml-2">Tickets</span>
               </div>
             </li>
             <li className="flex w-full justify-between font-semibold text-gray-600 hover:text-gray-500 cursor-pointer items-center mb-8">
