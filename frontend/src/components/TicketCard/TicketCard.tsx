@@ -1,6 +1,6 @@
 import React from "react";
 import QRCodeGenerator from "@/components/QRCodeGenerator";
-import {Ticket, TicketCardProps} from "@/types"
+import {TicketCardProps} from "@/types"
 
 const TicketCard: React.FC<TicketCardProps> = ({ ticket }) => {
     return (
