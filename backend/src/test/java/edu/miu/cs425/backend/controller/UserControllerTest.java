@@ -7,6 +7,8 @@ import edu.miu.cs425.backend.dto.request.UserRequest;
 import edu.miu.cs425.backend.dto.response.AuthResponse;
 import edu.miu.cs425.backend.dto.response.UserResponse;
 import edu.miu.cs425.backend.model.Role;
+import edu.miu.cs425.backend.repository.FlightRepository;
+import edu.miu.cs425.backend.repository.UserRepository;
 import edu.miu.cs425.backend.service.UserService;
 import edu.miu.cs425.backend.util.JwtUtil;
 import org.junit.jupiter.api.Test;
@@ -39,6 +41,12 @@ class UserControllerTest {
 
     @MockitoBean
     private JwtUtil jwtUtil;
+
+    @MockitoBean
+    private FlightRepository flightRepository;
+
+    @MockitoBean
+    private UserRepository userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;

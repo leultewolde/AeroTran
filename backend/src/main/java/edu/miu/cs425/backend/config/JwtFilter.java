@@ -1,5 +1,8 @@
 package edu.miu.cs425.backend.config;
 
+import edu.miu.cs425.backend.exception.UserNotFoundException;
+import edu.miu.cs425.backend.model.User;
+import edu.miu.cs425.backend.repository.UserRepository;
 import edu.miu.cs425.backend.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -36,10 +39,10 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-        String username = jwtUtil.getClaimsFromToken(token).getSubject();
+        String userId = jwtUtil.getClaimsFromToken(token).getSubject();
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            var user = userDetailsService.loadUserByUsername(username);
+        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            User user = userRepository.findById(Long.parseLong(userId)).orElseThrow(()-> new UserNotFoundException("User with is '" + userId +"' not found"));
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

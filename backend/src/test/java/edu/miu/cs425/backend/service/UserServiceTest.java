@@ -137,14 +137,18 @@ class UserServiceTest {
         request.setEmail("valid@example.com");
         request.setPassword("password");
 
-        org.springframework.security.core.userdetails.UserDetails userDetails =
-                org.springframework.security.core.userdetails.User.withUsername("valid@example.com")
-                        .password("encodedPassword")
-                        .authorities("ROLE_USER")
-                        .build();
+        User foundUser = new User();
+        foundUser.setId(1L);
+        foundUser.setRole(Role.REGULAR);
 
-        when(userDetailsService.loadUserByUsername("valid@example.com")).thenReturn(userDetails);
-        when(jwtUtil.generateAccessToken(userDetails)).thenReturn("jwtToken");
+//        org.springframework.security.core.userdetails.UserDetails userDetails =
+//                org.springframework.security.core.userdetails.User.withUsername("valid@example.com")
+//                        .password("encodedPassword")
+//                        .authorities("ROLE_USER")
+//                        .build();
+
+        when(userRepository.findUserByEmail("valid@example.com")).thenReturn(Optional.of(foundUser));
+        when(jwtUtil.generateAccessToken(foundUser)).thenReturn("jwtToken");
 
         AuthResponse response = userService.loginUser(request);
 

@@ -1,6 +1,7 @@
 package edu.miu.cs425.backend.util;
 
-import edu.miu.cs425.backend.util.JwtUtil;
+import edu.miu.cs425.backend.model.Role;
+import edu.miu.cs425.backend.model.User;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,14 +31,18 @@ class JwtUtilTest {
     @Test
     void generateAndValidateToken() {
         // Given a UserDetails object
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                "testUser",
-                "password",
-                List.of(new SimpleGrantedAuthority("ROLE_REGULAR"), new SimpleGrantedAuthority("ROLE_ADMIN"))
-        );
+        User foundUser = new User();
+        foundUser.setId(1L);
+
+        foundUser.setRole(Role.REGULAR);
+//        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+//                "testUser",
+//                "password",
+//                List.of(new SimpleGrantedAuthority("ROLE_REGULAR"), new SimpleGrantedAuthority("ROLE_ADMIN"))
+//        );
 
         // When
-        String token = jwtUtil.generateAccessToken(userDetails);
+        String token = jwtUtil.generateAccessToken(foundUser);
 
         // Then - Validate the token
         Claims claims = jwtUtil.getClaimsFromToken(token);
@@ -45,7 +50,7 @@ class JwtUtilTest {
         String authorities = (String) claims.get("authorities");
         List<String> actualRoles = Arrays.asList(authorities.split(","));
 
-        assertThat(claims.getSubject()).isEqualTo("testUser");
-        assertThat(actualRoles).containsExactlyInAnyOrder("ROLE_REGULAR", "ROLE_ADMIN");
+        assertThat(claims.getSubject()).isEqualTo("1");
+        assertThat(actualRoles).containsExactlyInAnyOrder("ROLE_REGULAR");
     }
 }
