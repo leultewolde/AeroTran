@@ -6,50 +6,66 @@ import FlightCard from "@/components/FlightCard/FlightCard";
 import {FlightAPI} from "@/lib/api/FlightAPI";
 import {Flight} from "@/types";
 import {useRouter} from "next/router";
-import Index from "@/pages/index";
+import SearchBar from "@/components/SearchBar";
+
+const setValue = (value: string | string[] | undefined): string | null =>
+    value ? value.toString() : null;
 
 function Flights() {
-    const [lastOrders] = useState([...lastOrdersData]);
+    const router = useRouter();
+    // const [lastOrders] = useState([...lastOrdersData]);
     const [flights, setFlights] = useState<Flight[]>([]);
 
-    const router = useRouter();
-    const { departure, arrival } = router.query;
+    const [departure, setDeparture] = useState<string | null>(
+        setValue(router.query.departure)
+    );
+    const [arrival, setArrival] = useState<string | null>(
+        setValue(router.query.arrival)
+    );
 
-    // useEffect(() => {
-    //     if (router.query) {
-    //         if (router.query.departure) setDeparture(router.query.departure as string);
-    //         if (router.query.arrival) setArrival(router.query.arrival as string);
-    //     }
-    // }, [router]);
+    useEffect(() => {
+        // Update departure and arrival from query params
+        const queryDeparture = setValue(router.query.departure);
+        const queryArrival = setValue(router.query.arrival);
+        if (queryDeparture !== departure) setDeparture(queryDeparture);
+        if (queryArrival !== arrival) setArrival(queryArrival);
+    }, [router.query.departure, router.query.arrival]);
 
-    const handleChildClick = async (departure1 ="", arrival1="") => {
-        console.log('Button clicked in child component!');
+    useEffect(() => {
+        // Search flights when both departure and arrival are available
+        if (departure && arrival) {
+            searchFlights(departure, arrival);
+        }
+    }, [departure, arrival]);
+
+    const handleChildClick = async (departure1 = "", arrival1 = "") => {
+        // console.log('Button clicked in child component!');
         // Add your logic here
         // setDeparture(router.query.departure as string);
         // setArrival(router.query.arrival as string);
-        await searchFlights(departure1 as string, arrival1 as string);
+        // await searchFlights(departure1 as string, arrival1 as string);
     };
 
-    useEffect(() => {
-        console.log({ departure, arrival });
-        if (!router.query.departure || !router.query.arrival) {
-            console.log('departure not found');
-            const fetchData = async () => {
-                await fetchAllFlights();
-            };
-
-            fetchData();
-        } else {
-            console.log('searching')
-            const searchData = async () => {
-                await searchFlights(departure as string, arrival as string);
-            };
-
-            searchData();
-        }
-        //
-
-    }, []); // Add dependency array as needed
+    // useEffect(() => {
+    //     console.log({ departure, arrival });
+    //     if (!router.query.departure || !router.query.arrival) {
+    //         console.log('departure not found');
+    //         const fetchData = async () => {
+    //             await fetchAllFlights();
+    //         };
+    //
+    //         fetchData();
+    //     } else {
+    //         console.log('searching')
+    //         const searchData = async () => {
+    //             await searchFlights(departure as string, arrival as string);
+    //         };
+    //
+    //         searchData();
+    //     }
+    //     //
+    //
+    // }, []); // Add dependency array as needed
 
 
     const flightData = {
@@ -61,11 +77,11 @@ function Flights() {
         arrivalTime: "2024-12-20T14:00:00",
         status: "ACTIVE",
         seats: [
-            { seatId: 1, seatNumber: "1A", available: false },
-            { seatId: 2, seatNumber: "1B", available: false },
-            { seatId: 3, seatNumber: "1C", available: true },
-            { seatId: 4, seatNumber: "2A", available: true },
-            { seatId: 5, seatNumber: "2B", available: true },
+            {seatId: 1, seatNumber: "1A", available: false},
+            {seatId: 2, seatNumber: "1B", available: false},
+            {seatId: 3, seatNumber: "1C", available: true},
+            {seatId: 4, seatNumber: "2A", available: true},
+            {seatId: 5, seatNumber: "2B", available: true},
         ],
     };
 
@@ -79,11 +95,10 @@ function Flights() {
         }
     }
 
-    async function searchFlights(departureCity:string,arrivalCity:string) {
+    async function searchFlights(departureCity: string, arrivalCity: string) {
         try {
-            const flights = await FlightAPI.searchFlights(departureCity,arrivalCity);
+            const flights = await FlightAPI.searchFlights(departureCity, arrivalCity);
             setFlights(flights);
-
             console.log('Searched flights:', flights);
         } catch (error) {
             console.error('Error fetching flights:', error);
@@ -91,17 +106,19 @@ function Flights() {
     }
 
 
-
     return (
         <div className="flex flex-no-wrap bg-slate-50">
-            <SideBar />
-
+            <SideBar/>
             <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
-                <Index departure={departure} arrival={arrival} onButtonClick={handleChildClick}  />
+                <SearchBar departureCity={departure} arrivalCity={arrival} onButtonClick={handleChildClick}/>
                 <div className="flex flex-wrap gap-4 p-4">
-                    {flights.map((flightData: Flight) => (
-                        <FlightCard key={flightData.id} flight={flightData}/>
-                    ))}
+                    {flights.length > 0 ? (
+                        flights.map((flightData) => (
+                            <FlightCard key={flightData.id} flight={flightData} />
+                        ))
+                    ) : (
+                        <p>No flights found.</p>
+                    )}
                 </div>
 
 

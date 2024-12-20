@@ -54,7 +54,7 @@ export default function Register() {
                 name: data.name,
                 age: calculateAge(new Date(data.dob)),
                 phone: data.phone,
-                role: Role.REGULAR,
+                role: Role.ADMIN,
                 email: data.email,
                 password: data.password
             });
@@ -62,7 +62,6 @@ export default function Register() {
             await router.replace('/');
         } catch (error: any) {
             alert(`Signup failed: ${error.response?.data?.message || 'Server error'}`);
-            console.log(error)
         } finally {
             setLoading(false);
         }

@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {useRouter} from "next/router";
 import {IconButton, Link} from "@mui/material";
-import {getToken, removeToken} from "@/utils/tokenService";
+import {getRole, getToken, removeAuthorization} from "@/utils/tokenService";
+import {Role} from "@/types/api/users";
 
 
 interface Props {
@@ -33,18 +34,20 @@ export default function NavBar(props: Props) {
     const router = useRouter();
     const token = getToken();
     const signOut = () => {
-        removeToken();
+        removeAuthorization();
         router.replace('/');
     }
 
     const navItems:{name: string, visible: boolean, onClick: ()=>void}[] = [
-        {name: 'CreateFlight', visible: token===null, onClick: () => router.push("/flights/create")},
+        {name: 'CreateFlight', visible: (token!==null&&getRole()==Role.ADMIN), onClick: () => router.push("/flights/create")},
+        {name: 'Tickets', visible: (token!==null), onClick: () => router.push("/tickets")},
+        {name: 'Profile', visible: (token!==null), onClick: () => router.push("/profile")},
         {name: 'Flights', visible: token===null, onClick: () => router.push("/flights")},
-        {name: 'Tickets', visible: token===null, onClick: () => router.push("/tickets")},
-        {name: 'Profile', visible: token!==null, onClick: () => router.push("/profile")},
         {name: 'Login', visible: token===null, onClick: () => router.push("/auth/login")},
         {name: 'Register', visible: token===null, onClick: () => router.push("/auth/register")},
-        {name: 'Sign Out', visible: token!==null, onClick: signOut}
+        {name: 'Admin Register', visible: token===null, onClick: () => router.push("/auth/admin/register")},
+        {name: 'Sign Out', visible: token!==null, onClick: signOut},
+        {name: getRole() || "-", visible: token!==null, onClick: ()=>{}}
     ];
 
     const handleDrawerToggle = () => {
