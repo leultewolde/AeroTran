@@ -77,11 +77,11 @@ function Flights() {
         arrivalTime: "2024-12-20T14:00:00",
         status: "ACTIVE",
         seats: [
-            {seatId: 1, seatNumber: "1A", available: false},
-            {seatId: 2, seatNumber: "1B", available: false},
-            {seatId: 3, seatNumber: "1C", available: true},
-            {seatId: 4, seatNumber: "2A", available: true},
-            {seatId: 5, seatNumber: "2B", available: true},
+            { seatId: 1, seatNumber: "1A", available: false },
+            { seatId: 2, seatNumber: "1B", available: false },
+            { seatId: 3, seatNumber: "1C", available: true },
+            { seatId: 4, seatNumber: "2A", available: true },
+            { seatId: 5, seatNumber: "2B", available: true },
         ],
     };
 
