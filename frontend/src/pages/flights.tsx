@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import lastOrdersData from '@/data/lastOrders';
-import SideBar from '@/components/SideBar';
 import FlightCard from "@/components/FlightCard/FlightCard";
 import {FlightAPI} from "@/lib/api/FlightAPI";
 import {Flight} from "@/types";
@@ -13,7 +11,7 @@ const setValue = (value: string | string[] | undefined): string | null =>
 
 function Flights() {
     const router = useRouter();
-    // const [lastOrders] = useState([...lastOrdersData]);
+
     const [flights, setFlights] = useState<Flight[]>([]);
 
     const [departure, setDeparture] = useState<string | null>(
@@ -35,6 +33,8 @@ function Flights() {
         // Search flights when both departure and arrival are available
         if (departure && arrival) {
             searchFlights(departure, arrival);
+        } else {
+            fetchAllFlights();
         }
     }, [departure, arrival]);
 
@@ -77,11 +77,11 @@ function Flights() {
         arrivalTime: "2024-12-20T14:00:00",
         status: "ACTIVE",
         seats: [
-            { seatId: 1, seatNumber: "1A", available: false },
-            { seatId: 2, seatNumber: "1B", available: false },
-            { seatId: 3, seatNumber: "1C", available: true },
-            { seatId: 4, seatNumber: "2A", available: true },
-            { seatId: 5, seatNumber: "2B", available: true },
+            {seatId: 1, seatNumber: "1A", available: false},
+            {seatId: 2, seatNumber: "1B", available: false},
+            {seatId: 3, seatNumber: "1C", available: true},
+            {seatId: 4, seatNumber: "2A", available: true},
+            {seatId: 5, seatNumber: "2B", available: true},
         ],
     };
 
@@ -108,20 +108,17 @@ function Flights() {
 
     return (
         <div className="flex flex-no-wrap bg-slate-50">
-            <SideBar/>
             <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
                 <SearchBar departureCity={departure} arrivalCity={arrival} onButtonClick={handleChildClick}/>
                 <div className="flex flex-wrap gap-4 p-4">
                     {flights.length > 0 ? (
                         flights.map((flightData) => (
-                            <FlightCard key={flightData.id} flight={flightData} />
+                            <FlightCard key={flightData.id} flight={flightData}/>
                         ))
                     ) : (
                         <p>No flights found.</p>
                     )}
                 </div>
-
-
             </div>
         </div>
     );

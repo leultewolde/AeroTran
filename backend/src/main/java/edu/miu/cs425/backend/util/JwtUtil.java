@@ -1,5 +1,6 @@
 package edu.miu.cs425.backend.util;
 
+import edu.miu.cs425.backend.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,12 +23,12 @@ public class JwtUtil {
     private long accessTokenExpirationMs;
 
 
-    public String generateAccessToken(UserDetails userDetails) {
+    public String generateAccessToken(User userDetails) {
         return Jwts
                 .builder()
                 .signWith(signKey())
                 .claim("authorities", populateAuthorities(userDetails.getAuthorities()))
-                .subject(userDetails.getUsername())
+                .subject(String.valueOf(userDetails.getId()))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpirationMs))
                 .compact();

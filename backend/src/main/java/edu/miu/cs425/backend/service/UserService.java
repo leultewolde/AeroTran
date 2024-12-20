@@ -6,6 +6,7 @@ import edu.miu.cs425.backend.dto.request.UserRequest;
 import edu.miu.cs425.backend.dto.response.AuthResponse;
 import edu.miu.cs425.backend.dto.response.UserResponse;
 import edu.miu.cs425.backend.exception.UserAlreadyExistsException;
+import edu.miu.cs425.backend.exception.UserNotFoundException;
 import edu.miu.cs425.backend.mapper.UserMapper;
 import edu.miu.cs425.backend.model.User;
 import edu.miu.cs425.backend.repository.UserRepository;
@@ -52,7 +53,8 @@ public class UserService {
                 request.getPassword()
         ));
 
-        var user = userDetailsService.loadUserByUsername(request.getEmail());
+//        var user = userDetailsService.loadUserByUsername(request.getEmail());
+        User user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(()-> new UserNotFoundException("User with email '" + request.getEmail() +"' not found"));
 
         String accessToken = jwtUtil.generateAccessToken(user);
 
