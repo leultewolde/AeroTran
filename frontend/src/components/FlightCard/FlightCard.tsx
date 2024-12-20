@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { FlightCardProps } from "@/types";
+import React, {useState} from "react";
+import {FlightCardProps, FlightStatus} from "@/types";
 import {BookingAPI} from "@/lib/api/FlightAPI";
 import {useRouter} from "next/router";
+import {getUserId} from "@/utils/tokenService";
 
-const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
+const FlightCard: React.FC<FlightCardProps> = ({flight}) => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const [userId] = useState<number | null>(getUserId());
     const router = useRouter();
 
     const handleSeatChange = (seatNumber: string) => {
@@ -17,25 +19,25 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
         });
     };
 
+
     const handleBooking = async () => {
-        // TODO get current login in useer here
+        if (!userId) return;
+
         const bookingData = {
-            userId: 1,
+            userId: userId,
             flightId: flight.flightId,
             seatNumbers: selectedSeats,
         };
 
-        router.reload();
-
         try {
             const response = await BookingAPI.createBooking(bookingData);
             if (response) {
-                alert("Booking successful!");
+                // alert("Booking successful!");
+                await router.push('/tickets')
                 setSelectedSeats([]); // Clear selected seats after successful booking
 
             } else {
-                const errorData = await response;
-                alert(`Booking failed: ${errorData}`);
+                alert(`Booking failed: ${response}`);
             }
         } catch (error) {
             console.error("Error booking seats:", error);
@@ -61,7 +63,10 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
                     <strong>Arrival:</strong>{" "}
                     {new Date(flight.arrivalTime).toLocaleString()}
                 </p>
-                <p>
+                <p style={{
+                    backgroundColor: flight.status === FlightStatus.CANCELLED ? '#ff0016' : '#fff',
+                    color: flight.status === FlightStatus.CANCELLED ? '#fff' : '#000',
+                }}>
                     <strong>Status:</strong> {flight.status}
                 </p>
             </div>
@@ -73,13 +78,13 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
                             key={seat.seatId}
                             style={{
                                 ...styles.seat,
-                                backgroundColor: seat.available ? "#d4edda" : "#f8d7da",
+                                backgroundColor: seat.available && flight.status !== FlightStatus.CANCELLED ? "#d4edda" : "#f8d7da",
                             }}
                         >
                             <label>
                                 <input
                                     type="checkbox"
-                                    disabled={!seat.available}
+                                    disabled={!seat.available || flight.status === FlightStatus.CANCELLED}
                                     checked={selectedSeats.includes(seat.seatNumber)}
                                     onChange={() => handleSeatChange(seat.seatNumber)}
                                 />
@@ -88,13 +93,13 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
                         </li>
                     ))}
                 </ul>
-                <button
+                {(userId) && <button
                     style={styles.bookButton}
                     onClick={handleBooking}
                     disabled={selectedSeats.length === 0}
                 >
                     Book Seats
-                </button>
+                </button>}
             </div>
         </div>
     );

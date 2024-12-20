@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Button, TextField, Typography, Chip, Grid } from '@mui/material';
+import {Box, Button, TextField, Typography, Chip, Grid, Select, MenuItem, InputLabel} from '@mui/material';
 import {FlightAPI} from "@/lib/api/FlightAPI";
 import {useRouter} from "next/router";
+import {FlightStatus} from "@/types";
 
 interface FormValues {
     flightNumber: string;
@@ -114,14 +115,36 @@ export default function Create() {
                         />
                     )}
                 />
-                <TextField
-                    label="Status"
-                    fullWidth
-                    {...register('status', { required: 'Status is required' })}
-                    error={!!errors.status}
-                    helperText={errors.status?.message}
-                    sx={{ mb: 2 }}
+                {/*<TextField*/}
+                {/*    label="Status"*/}
+                {/*    fullWidth*/}
+                {/*    {...register('status', { required: 'Status is required' })}*/}
+                {/*    error={!!errors.status}*/}
+                {/*    helperText={errors.status?.message}*/}
+                {/*    sx={{ mb: 2 }}*/}
+                {/*/>*/}
+                <Controller
+                    name="status"
+                    control={control}
+                    defaultValue={FlightStatus.ACTIVE.valueOf()}
+                    rules={{ required: 'Status is required' }}
+                    render={({ field, fieldState }) => (
+                        <Select
+                            {...field}
+                            label="Status"
+                            defaultValue={FlightStatus.ACTIVE.valueOf()}
+                            fullWidth
+                            error={!!fieldState.error}
+                            helperText={fieldState.error?.message}
+                            sx={{ mb: 2 }}
+                        >
+                            <MenuItem value={FlightStatus.ACTIVE.valueOf()}>{FlightStatus.ACTIVE}</MenuItem>
+                            <MenuItem value={FlightStatus.DELAYED.valueOf()}>{FlightStatus.DELAYED.valueOf()}</MenuItem>
+                            <MenuItem value={FlightStatus.CANCELLED.valueOf()}>{FlightStatus.CANCELLED.valueOf()}</MenuItem>
+                        </Select>
+                    )}
                 />
+
                 <TextField
                     label="Add Seat Numbers"
                     fullWidth

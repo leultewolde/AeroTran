@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import {loginUser} from "@/services/authService";
 import {LoginRequest} from "@/types/api/users";
-import {setToken} from "@/utils/tokenService";
+import {setAuthorization} from "@/utils/tokenService";
 import {useRouter} from "next/router";
 
 export default function Login() {
@@ -23,12 +23,17 @@ export default function Login() {
         setLoading(true);
         try {
             const {token} = await loginUser(data);
-            setToken(token);
-            const result = transformQuery(router.query);
-            await router.replace({
-                pathname: result.path,
-                query: result.params
-            });
+            setAuthorization(token);
+            // if(router.query) {
+            //     const result = transformQuery(router.query);
+            //     await router.replace({
+            //         pathname: result.path,
+            //         query: result.params
+            //     });
+            // } else {
+            //
+            // }
+            await router.replace('/');
         } catch (error:any) {
             alert(`Sign In failed: ${error.response?.data?.message || 'Server error'}`);
         } finally {

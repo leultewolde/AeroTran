@@ -38,16 +38,16 @@ export default function NavBar(props: Props) {
         router.replace('/');
     }
 
-    const navItems:{name: string, visible: boolean, onClick: ()=>void}[] = [
+    const navItems:{name: string, color?: string, visible: boolean, onClick: ()=>void}[] = [
         {name: 'CreateFlight', visible: (token!==null&&getRole()==Role.ADMIN), onClick: () => router.push("/flights/create")},
         {name: 'Tickets', visible: (token!==null), onClick: () => router.push("/tickets")},
         {name: 'Profile', visible: (token!==null), onClick: () => router.push("/profile")},
-        {name: 'Flights', visible: token===null, onClick: () => router.push("/flights")},
+        {name: 'Flights', visible: true, onClick: () => router.push("/flights")},
         {name: 'Login', visible: token===null, onClick: () => router.push("/auth/login")},
         {name: 'Register', visible: token===null, onClick: () => router.push("/auth/register")},
         {name: 'Admin Register', visible: token===null, onClick: () => router.push("/auth/admin/register")},
         {name: 'Sign Out', visible: token!==null, onClick: signOut},
-        {name: getRole() || "-", visible: token!==null, onClick: ()=>{}}
+        {name: getRole() || "-", color:'yellow', visible: token!==null, onClick: ()=>{}}
     ];
 
     const handleDrawerToggle = () => {
@@ -66,7 +66,7 @@ export default function NavBar(props: Props) {
                 {navItems.filter((value) => value.visible).map((item) => (
                     <ListItem key={item.name} disablePadding>
                         <ListItemButton onClick={item.onClick} sx={{textAlign: 'center'}}>
-                            <ListItemText primary={item.name}/>
+                            <ListItemText primary={item.name} color={item.color || '#fff'}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -98,7 +98,7 @@ export default function NavBar(props: Props) {
                     </Typography>
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {navItems.filter((value) => value.visible).map((item) => (
-                            <Button key={item.name} onClick={item.onClick} sx={{color: '#fff'}}>
+                            <Button key={item.name} onClick={item.onClick} sx={{color: item.color || '#fff'}}>
                                 {item.name}
                             </Button>
                         ))}
