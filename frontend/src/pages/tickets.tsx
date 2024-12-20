@@ -9,7 +9,6 @@ function Tickets() {
     const [tickets, setTickets] = useState<Ticket[]>([]);
 
     const router = useRouter();
-    const {userId} = router.query;
 
     useEffect(() => {
         console.log('User ID not found');

@@ -1,4 +1,11 @@
 // Define TypeScript interfaces for the flight data
+export enum FlightStatus {
+  ACTIVE='ACTIVE',
+  DELAYED='DELAYED',
+  CANCELLED='CANCELLED'
+}
+
+
 export interface Flight {
   id?: string; // Optional for create
   flightNumber: string;
@@ -6,7 +13,7 @@ export interface Flight {
   destinationCity: string;
   departureTime: string; // ISO format
   arrivalTime: string; // ISO format
-  status: string;
+  status: FlightStatus;
   seatNumbers: string[];
   flightId: number;
   seats: Seat[];

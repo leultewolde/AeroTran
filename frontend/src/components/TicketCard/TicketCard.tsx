@@ -1,15 +1,29 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import QRCodeGenerator from "@/components/QRCodeGenerator";
 import {TicketCardProps} from "@/types"
+import {UserResponse} from "@/types/api/users";
+import {getUserById} from "@/services/usersService";
 
 const TicketCard: React.FC<TicketCardProps> = ({ ticket }) => {
+
+    const [userInfo, setUserInfo] = useState<UserResponse|null>(null);
+
+    const getUser = async () => {
+        const user = await getUserById(ticket.userId);
+        setUserInfo(user);
+    }
+
+    useEffect(() => {
+        getUser();
+    }, [ticket]);
+
     return (
         <div style={styles.card}>
             <h2 style={styles.header}>Ticket ID: {ticket.ticketId}</h2>
             <div style={styles.info}>
-                <p>
-                    <strong>User ID:</strong> {ticket.userId}
-                </p>
+                {userInfo && <p>
+                    <strong>User ID:</strong> {userInfo.name}
+                </p>}
                 <p>
                     <strong>Flight ID:</strong> {ticket.flightId}
                 </p>

@@ -2,9 +2,21 @@ import React, {useEffect, useState} from 'react';
 
 import FlightCard from "@/components/FlightCard/FlightCard";
 import {FlightAPI} from "@/lib/api/FlightAPI";
-import {Flight} from "@/types";
+import {Flight, FlightStatus} from "@/types";
 import {useRouter} from "next/router";
 import SearchBar from "@/components/SearchBar";
+
+const statusPriority: Record<FlightStatus, number> = {
+    [FlightStatus.ACTIVE]: 1,
+    [FlightStatus.DELAYED]: 2,
+    [FlightStatus.CANCELLED]: 3,
+};
+
+function sortFlightsByStatus(flights: Flight[]): Flight[] {
+    return flights.sort((a, b) => {
+        return statusPriority[a.status] - statusPriority[b.status];
+    });
+}
 
 const setValue = (value: string | string[] | undefined): string | null =>
     value ? value.toString() : null;
@@ -112,7 +124,7 @@ function Flights() {
                 <SearchBar departureCity={departure} arrivalCity={arrival} onButtonClick={handleChildClick}/>
                 <div className="flex flex-wrap gap-4 p-4">
                     {flights.length > 0 ? (
-                        flights.map((flightData) => (
+                        sortFlightsByStatus(flights).map((flightData) => (
                             <FlightCard key={flightData.id} flight={flightData}/>
                         ))
                     ) : (
