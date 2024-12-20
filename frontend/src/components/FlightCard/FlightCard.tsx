@@ -1,7 +1,48 @@
-import React from "react";
-import {Seat, Flight, FlightCardProps} from "@/types"
+import React, { useState } from "react";
+import { FlightCardProps } from "@/types";
+import {BookingAPI} from "@/lib/api/FlightAPI";
+import {useRouter} from "next/router";
 
 const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
+    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const router = useRouter();
+
+    const handleSeatChange = (seatNumber: string) => {
+        setSelectedSeats((prevSelectedSeats) => {
+            if (prevSelectedSeats.includes(seatNumber)) {
+                return prevSelectedSeats.filter((seat) => seat !== seatNumber);
+            } else {
+                return [...prevSelectedSeats, seatNumber];
+            }
+        });
+    };
+
+    const handleBooking = async () => {
+        // TODO get current login in useer here
+        const bookingData = {
+            userId: 1,
+            flightId: flight.flightId,
+            seatNumbers: selectedSeats,
+        };
+
+        router.reload();
+
+        try {
+            const response = await BookingAPI.createBooking(bookingData);
+            if (response) {
+                alert("Booking successful!");
+                setSelectedSeats([]); // Clear selected seats after successful booking
+
+            } else {
+                const errorData = await response;
+                alert(`Booking failed: ${errorData}`);
+            }
+        } catch (error) {
+            console.error("Error booking seats:", error);
+            alert("An error occurred while booking seats.");
+        }
+    };
+
     return (
         <div style={styles.card}>
             <h2 style={styles.header}>Flight: {flight.flightNumber}</h2>
@@ -35,10 +76,25 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
                                 backgroundColor: seat.available ? "#d4edda" : "#f8d7da",
                             }}
                         >
-                            Seat {seat.seatNumber}: {seat.available ? "Available" : "Booked"}
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    disabled={!seat.available}
+                                    checked={selectedSeats.includes(seat.seatNumber)}
+                                    onChange={() => handleSeatChange(seat.seatNumber)}
+                                />
+                                Seat {seat.seatNumber}: {seat.available ? "Available" : "Booked"}
+                            </label>
                         </li>
                     ))}
                 </ul>
+                <button
+                    style={styles.bookButton}
+                    onClick={handleBooking}
+                    disabled={selectedSeats.length === 0}
+                >
+                    Book Seats
+                </button>
             </div>
         </div>
     );
@@ -73,6 +129,15 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: "8px",
         margin: "4px 0",
         borderRadius: "4px",
+    },
+    bookButton: {
+        marginTop: "16px",
+        padding: "8px 16px",
+        backgroundColor: "#007bff",
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
     },
 };
 

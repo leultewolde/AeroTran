@@ -1,10 +1,8 @@
 import React, {ReactNode} from "react";
-import Footer from "@/components/Footer";
 import Loading from "@/components/Loading";
 import ErrorView from "@/components/ErrorView";
 import NavBar from "@/components/NavBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 
 export default function MainLayout({children, loading, error}: {

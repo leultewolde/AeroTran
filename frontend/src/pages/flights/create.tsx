@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Box, Button, TextField, Typography, Chip, Grid } from '@mui/material';
 import {FlightAPI} from "@/lib/api/FlightAPI";
+import {useRouter} from "next/router";
 
 interface FormValues {
     flightNumber: string;
@@ -16,7 +17,7 @@ interface FormValues {
 export default function Create() {
     const [loading, setLoading] = useState(false);
     const [seatNumbers, setSeatNumbers] = useState<string[]>(["1A", "1B", "1C", "2A", "2B"]);
-
+    const router = useRouter();
     const { register, control, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
     const handleAddSeat = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -41,6 +42,7 @@ export default function Create() {
             };
             await FlightAPI.createFlight(payload); // Replace with actual API call
             alert('Flight created successfully!');
+            router.push('/flights');
         } catch (error: any) {
             alert(`Failed to create flight: ${error.response?.data?.message || 'Server error'}`);
         } finally {
